@@ -1,0 +1,8 @@
+version: "2"
+services:
+  train:
+    build: .
+    volumes:
+      - ./app:/app/
+    working_dir: /app/
+    privileged: false

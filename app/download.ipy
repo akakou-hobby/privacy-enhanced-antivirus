@@ -1,0 +1,11 @@
+FILE1 = "g9Z5zsQk-malware.zip"
+FILE2 = "g9Z5zsQk-nomalware.zip"
+
+!mkdir data
+%cd data
+
+!wget https://web.sfc.wide.ad.jp/~akakou/{FILE1}
+!wget https://web.sfc.wide.ad.jp/~akakou/{FILE2}
+
+!unzip {FILE1} -d malware
+!unzip {FILE2} -d nomalware

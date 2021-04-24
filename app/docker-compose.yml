@@ -14,29 +14,29 @@ services:
     working_dir: /app/
     command: python -u model_owner.py
 
-  # serv1:
-  #   build: .
-  #   volumes:
-  #     - ./app:/app/
-  #   working_dir: /app/
-  #   command: python serv.py
-  #   environment:
-  #     - PORT=4000
+  serv0:
+    build: .
+    volumes:
+      - ./:/app/
+    working_dir: /app/
+    command: python serv.py
+    environment:
+      - NUMBER=0
 
-  # serv2:
-  #   build: .
-  #   volumes:
-  #     - ./app:/app/
-  #   working_dir: /app/
-  #   command: python serv.py
-  #   environment:
-  #     - PORT=4001
+  serv1:
+    build: .
+    volumes:
+      - ./:/app/
+    working_dir: /app/
+    command: python serv.py
+    environment:
+      - NUMBER=1
 
-  # serv2:
-  #   build: .
-  #   volumes:
-  #     - ./app:/app/
-  #   working_dir: /app/
-  #   command: python serv.py
-  #   environment:
-  #     - PORT=4002
+  serv2:
+    build: .
+    volumes:
+      - ./:/app/
+    working_dir: /app/
+    command: python serv.py
+    environment:
+      - NUMBER=2

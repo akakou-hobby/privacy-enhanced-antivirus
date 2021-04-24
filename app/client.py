@@ -17,25 +17,13 @@ from skimage import transform
 from imageio import imsave
 
 from kivy.app import App
-from kivy.uix.button import Button
+from kivy.core.window import Window
+from kivy.uix.label import Label
 
 
-class TestApp(App):
-    def build(self):
-        return Button(text='Hello World')
-
-
-TestApp().run()
-
-
-def read_file():
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-    else:
-        filename = 'test.exe'
-
-    with open(filename, 'rb') as f:
-        ln = os.path.getsize(filename)
+def read_file(filepath):
+    with open(filepath, 'rb') as f:
+        ln = os.path.getsize(filepath)
         width = 256
         rem = ln % width
         a = array.array("B")
@@ -59,7 +47,7 @@ def read_file():
     return data
 
 
-def run():
+def run(filepath):
     hook = sy.KerasHook(tf.keras)
     client = sy.TFEWorker()
 
@@ -70,11 +58,20 @@ def run():
 
     # time.sleep(5)
 
-    data = read_file()
+    data = read_file(filepath)
 
     result = client.query_model(numpy.array([data]))
     print("result:", numpy.mean(result))
 
 
-eel.init("assets")
-eel.start("main.html", mode="firefox")
+class AntivirusApp(App):
+    def build(self):
+        Window.bind(on_dropfile=self._on_file_drop)
+        return Label(text='DRAG AND DROP HERE!', font_size='20sp')
+
+    def _on_file_drop(self, window, file_path):
+        print(file_path)
+        run(file_path)
+
+
+AntivirusApp().run()

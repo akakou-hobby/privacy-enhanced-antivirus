@@ -18,3 +18,4 @@ RUN pip install scikit-image
 RUN pip install kivy 
 RUN apt-get -y install libmtdev-dev
 RUN apt-get -y install libgl1-mesa-dev
+RUN apt-get -y install nautilus 

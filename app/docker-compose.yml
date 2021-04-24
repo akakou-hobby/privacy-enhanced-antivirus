@@ -9,6 +9,9 @@ services:
     command: python3 -u client.py
     environment:
       - DISPLAY=${DISPLAY}
+    devices:
+      - "/dev/input:/dev/input"
+
   model_owner:
     build: .
     volumes:

@@ -4,9 +4,11 @@ services:
     build: .
     volumes:
       - ./:/app/
+      - /tmp/.X11-unix:/tmp/.X11-unix
     working_dir: /app/
     command: python3 -u client.py
-
+    environment:
+      - DISPLAY=${DISPLAY}
   model_owner:
     build: .
     volumes:

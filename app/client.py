@@ -16,6 +16,17 @@ import leargist
 from skimage import transform
 from imageio import imsave
 
+from kivy.app import App
+from kivy.uix.button import Button
+
+
+class TestApp(App):
+    def build(self):
+        return Button(text='Hello World')
+
+
+TestApp().run()
+
 
 def read_file():
     if len(sys.argv) > 1:
@@ -48,17 +59,22 @@ def read_file():
     return data
 
 
-hook = sy.KerasHook(tf.keras)
-client = sy.TFEWorker()
+def run():
+    hook = sy.KerasHook(tf.keras)
+    client = sy.TFEWorker()
 
-cluster = get_cluster()
-client.connect_to_model((1, 32, 32, 1), ((1, 25)), cluster)
+    cluster = get_cluster()
+    client.connect_to_model((1, 32, 32, 1), ((1, 25)), cluster)
 
-_, test_X, _, test_Y = get_dataset()
+    _, test_X, _, test_Y = get_dataset()
 
-# time.sleep(5)
+    # time.sleep(5)
 
-data = read_file()
+    data = read_file()
 
-result = client.query_model(numpy.array([data]))
-print("result:", numpy.mean(result))
+    result = client.query_model(numpy.array([data]))
+    print("result:", numpy.mean(result))
+
+
+eel.init("assets")
+eel.start("main.html", mode="firefox")

@@ -9,9 +9,12 @@ RUN pip install pillow
 RUN pip install cython
 
 RUN apt-get install -y fftw3-dev \
-  && git clone https://github.com/mertyyanik/pyleargist-python3 \
-  && cd pyleargist-python3 \
-  && python setup.py build \
-  && python setup.py install
+    && git clone https://github.com/mertyyanik/pyleargist-python3 \
+    && cd pyleargist-python3 \
+    && python setup.py build \
+    && python setup.py install
 
 RUN pip install scikit-image
+RUN pip install kivy 
+RUN apt-get -y install libmtdev-dev
+RUN apt-get -y install libgl1-mesa-dev

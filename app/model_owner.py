@@ -7,7 +7,6 @@ from cluster import get_cluster
 
 hook = sy.KerasHook(tf.keras)
 
-
 model = Model()
 model.load_weights('antivirus.h5')
 

@@ -1,3 +1,4 @@
+from kivy.lang import Builder
 import array
 import scipy
 import os
@@ -17,8 +18,13 @@ from skimage import transform
 from imageio import imsave
 
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.uix.label import Label
+# from kivy.uix.label import Label
+from kivy.uix.screenmanager import CardTransition
+
+THRESHOLD = 0
 
 
 def read_file(filepath):
@@ -61,17 +67,51 @@ def run(filepath):
     data = read_file(filepath)
 
     result = client.query_model(numpy.array([data]))
-    print("result:", numpy.mean(result))
+    result = numpy.mean(result)
+    print("result:", result)
+
+    return result > THRESHOLD
+
+
+class MainScreen(Screen):
+    pass
+
+
+class SubScreen(Screen):
+    def __init__(self, title, img, **kwargs):
+        self.img = img
+        self.title = title
+        super(SubScreen, self).__init__(**kwargs)
 
 
 class AntivirusApp(App):
     def build(self):
+        self.main = MainScreen(name='main')
+
+        self.sm = ScreenManager()
+        self.sm.switch_to(self.main)
+
+        # self.sm.add_widget()
+        # self.sm.add_widget()
+
         Window.bind(on_dropfile=self._on_file_drop)
-        return Label(text='DRAG AND DROP HERE!', font_size='20sp')
+
+        return self.sm
 
     def _on_file_drop(self, window, file_path):
-        print(file_path)
-        run(file_path)
+        result = run(file_path)
+
+        if result:
+            title = f"Danger! \"{file_path.decode()}\" is malware :("
+            img = "malware"
+        else:
+            title = f"Safe! \"{file_path.decode()}\" is not malware :)"
+            img = "doc2"
+
+        self.sub = SubScreen(title, f"assets/img/{img}.png", name='sub')
+        self.sm.switch_to(self.sub)
+
+# Builder.load_file('assets/main.kv')
 
 
 AntivirusApp().run()

@@ -1,0 +1,41 @@
+<MainScreen>:
+    canvas.before:
+        Color:
+            rgba: 0xea,0xd3,0xcb,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        # orientation: 'vertical'
+        Label:
+            text: "DROP FILE HERE"
+            font_size: "30sp"
+            color: 0x2b, 0x4f, 0x60, 1
+        Image:
+            source: 'assets/img/doc1.png'
+            size: ("20sp","20sp")    
+<SubScreen>:
+    canvas.before:
+        Color:
+            rgba: 0xea,0xd3,0xcb,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: root.title
+            font_size: "30sp"
+            color: 0x2b, 0x4f, 0x60, 1
+
+        Image:
+            source: root.img
+            size: ("20sp","20sp")   
+        
+        Label:
+            text: "Do you want to scan more? Drag here!"
+            font_size: "20sp"
+            color: 0x2b, 0x4f, 0x60, 1

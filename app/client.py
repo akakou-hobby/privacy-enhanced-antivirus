@@ -25,6 +25,7 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import CardTransition
 
 THRESHOLD = 0
+MAX_PATH_SIZE = 22
 
 
 def read_file(filepath):
@@ -100,12 +101,16 @@ class AntivirusApp(App):
 
     def _on_file_drop(self, window, file_path):
         result = run(file_path)
+        file_path = file_path.decode()
+
+        if len(file_path) > MAX_PATH_SIZE:
+            file_path = file_path[:MAX_PATH_SIZE] + "..."
 
         if result:
-            title = f"Danger! \"{file_path.decode()}\" is malware :("
+            title = f"Danger! \"{file_path}\" is malware :("
             img = "malware"
         else:
-            title = f"Safe! \"{file_path.decode()}\" is not malware :)"
+            title = f"Safe! \"{file_path}\" is not malware :)"
             img = "doc2"
 
         self.sub = SubScreen(title, f"assets/img/{img}.png", name='sub')
